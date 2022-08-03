@@ -1,4 +1,4 @@
-![Screenshot](img\screenshot.png)
+![Screenshot](img/screenshot.png)
 
 # GitHub User Viewer
 
