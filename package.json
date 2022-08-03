@@ -1,0 +1,11 @@
+{
+  "name": "github-api-test",
+  "version": "0.1.0",
+  "description": "Test app which fetches data from GitHub API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Markus Palomäki",
+  "license": "MIT"
+}
