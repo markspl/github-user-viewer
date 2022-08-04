@@ -59,7 +59,7 @@ const Home = () => {
                     <Container>
                         <Row className="align-items-center">
                             <Col md={2} />
-                            <Col md={3} xs={3}>
+                            <Col xs={3}>
                                 <img
                                     src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url}
                                     alt={`User ${userInfo.login} avatar`}
