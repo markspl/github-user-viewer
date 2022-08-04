@@ -1,7 +1,9 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { Row, Col, Container, ListGroup } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
+
+import UserInfo from "./UserInfo";
 
 const axios = require("axios");
 
@@ -15,9 +17,6 @@ const Home = () => {
             "Content-Type": "application/json",
         },
     };
-
-    // Create dates ready
-    const now = new Date();
 
     // Get user data from GitHub API only when page is reloaded
     useEffect(() => {
@@ -33,16 +32,6 @@ const Home = () => {
                 console.log(`Error: ${err}`);
             });
     };
-
-    const accountCreated = (time) => {
-        const created = new Date(userInfo.created_at);
-        const diff = Math.floor((now - created));
-        const days = Math.floor(diff / (1000 * 3600 * 24));
-
-        const createdDateString = new Date(time).toLocaleDateString("fi-FI");
-
-        return `${days} days ago (${createdDateString})`;
-    }
 
     if (!userInfo) {
         return (
@@ -75,15 +64,7 @@ const Home = () => {
                     <hr />
                     <Row>
                         <Col md={4}>
-                            <ListGroup>
-                                <ListGroup.Item><span className="userInfoItem">User ID:</span> {userInfo.id}</ListGroup.Item>
-                                <ListGroup.Item><span className="userInfoItem">Followers:</span> {userInfo.followers}</ListGroup.Item>
-                                <ListGroup.Item><span className="userInfoItem">Following:</span> {userInfo.following}</ListGroup.Item>
-                                <ListGroup.Item>
-                                    <span className="userInfoItem">Account created:</span> {accountCreated(userInfo.created_at)}
-                                </ListGroup.Item>
-                                <ListGroup.Item><span className="userInfoItem">Total of repos:</span> {userInfo.public_repos}</ListGroup.Item>
-                            </ListGroup>
+                            <UserInfo data={userInfo} />
                         </Col>
                         <Col>
                             <p>User <i>{userInfo.login}</i> information</p>
