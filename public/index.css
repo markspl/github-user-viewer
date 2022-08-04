@@ -13,11 +13,11 @@
     box-sizing: border-box;
 }
 
-.item-left{
+.item-left {
     width: 25%;
 }
 
-.item-right{
+.item-right {
     width: 75%;
     padding-left: 10px;
     padding-left: 10px;
@@ -41,7 +41,8 @@
 .userBio {
     font-style: italic;
     font-size: small;
-    white-space: pre-wrap; /* so <br> would work */
+    /* so <br> would work */
+    white-space: pre-wrap;
 }
 
 .userInfoItem {

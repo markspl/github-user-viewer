@@ -4,11 +4,13 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 
 import UserInfo from "./UserInfo";
+import Repositories from "./Repositories";
 
 const axios = require("axios");
 
 const Home = () => {
     const [userInfo, setUserInfo] = useState({});
+    const [repositories, setRepoInfo] = useState([]);
 
     const options = {
         method: "get",
@@ -21,16 +23,35 @@ const Home = () => {
     // Get user data from GitHub API only when page is reloaded
     useEffect(() => {
         getUserInfo();
+        getRepositories();
     }, []);
 
     const getUserInfo = () => {
-        axios(options)
-            .then(res => {
-                setUserInfo(res.data);
-            })
-            .catch(err => {
-                console.log(`Error: ${err}`);
-            });
+        axios({
+            method: "get",
+            url: "https://api.github.com/users/markspl",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            setUserInfo(res.data);
+        }).catch(err => {
+            console.log(`Error: ${err}`);
+        });
+    };
+
+    const getRepositories = () => {
+        axios({
+            method: "get",
+            url: "https://api.github.com/users/markspl/repos",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            setRepoInfo(res.data);
+        }).catch(err => {
+            console.log(`Error: ${err}`);
+        });
     };
 
     if (!userInfo) {
@@ -67,7 +88,8 @@ const Home = () => {
                             <UserInfo data={userInfo} />
                         </Col>
                         <Col>
-                            <p>User <i>{userInfo.login}</i> information</p>
+                            {(userInfo ? <Repositories data={repositories} />
+                            : <h2>Loading...</h2>)}
                         </Col>
                     </Row>
                 </>
