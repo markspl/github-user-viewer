@@ -1,5 +1,7 @@
 /** @format */
+
 import React, { useEffect, useState } from "react";
+import { Row, Col, Container, ListGroup } from "react-bootstrap";
 
 const axios = require("axios");
 
@@ -13,6 +15,9 @@ const Home = () => {
             "Content-Type": "application/json",
         },
     };
+
+    // Create dates ready
+    const now = new Date();
 
     // Get user data from GitHub API only when page is reloaded
     useEffect(() => {
@@ -30,8 +35,7 @@ const Home = () => {
     };
 
     const accountCreated = (time) => {
-        const created = new Date(time);
-        const now = new Date();
+        const created = new Date(userInfo.created_at);
         const diff = Math.floor((now - created));
         const days = Math.floor(diff / (1000 * 3600 * 24));
 
@@ -42,42 +46,49 @@ const Home = () => {
 
     if (!userInfo) {
         return (
-            <div className="userCard">
-                <h1>Loading...</h1>
+            <div>
+                <Row>
+                    <h1>Loading...</h1>
+                </Row>
             </div>
         );
     } else {
         return (
             <div className="userCard">
                 <>
-                    <div className="row">
-                        <div className="center">
-                            <div className="item item-left">
-                                <img src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url} alt={`User ${userInfo.login} avatar`} className="avatar" />
-                            </div>
-                            <div className="item item-right">
+                    <Container>
+                        <Row className="align-items-center">
+                            <Col md={2} />
+                            <Col md={3} xs={3}>
+                                <img
+                                    src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url}
+                                    alt={`User ${userInfo.login} avatar`}
+                                    className="avatar" />
+                            </Col>
+                            <Col md={5} xs={9}>
                                 <h1>GitHub/<a href={userInfo.html_url}>{userInfo.login}</a></h1>
                                 <p className="userBio">{userInfo.bio}</p>
-                            </div>
-                        </div>
-                    </div>
+                            </Col>
+                            <Col md={2} />
+                        </Row>
+                    </Container>
                     <hr />
-                    <div className="row">
-                        <div className="item">
-                            <dl>
-                                <dt>User ID</dt>
-                                <dd>{userInfo.id}</dd>
-                                <dt>Followers</dt>
-                                <dd>{userInfo.followers}</dd>
-                                <dt>Following</dt>
-                                <dd>{userInfo.following}</dd>
-                                <dt>Account created</dt>
-                                <dd>{accountCreated(userInfo.created_at)}</dd>
-                                <dt>Total of repos</dt>
-                                <dd>{userInfo.public_repos}</dd>
-                            </dl>
-                        </div>
-                    </div>
+                    <Row>
+                        <Col md={4}>
+                            <ListGroup>
+                                <ListGroup.Item><span className="userInfoItem">User ID:</span> {userInfo.id}</ListGroup.Item>
+                                <ListGroup.Item><span className="userInfoItem">Followers:</span> {userInfo.followers}</ListGroup.Item>
+                                <ListGroup.Item><span className="userInfoItem">Following:</span> {userInfo.following}</ListGroup.Item>
+                                <ListGroup.Item>
+                                    <span className="userInfoItem">Account created:</span> {accountCreated(userInfo.created_at)}
+                                </ListGroup.Item>
+                                <ListGroup.Item><span className="userInfoItem">Total of repos:</span> {userInfo.public_repos}</ListGroup.Item>
+                            </ListGroup>
+                        </Col>
+                        <Col>
+                            <p>User <i>{userInfo.login}</i> information</p>
+                        </Col>
+                    </Row>
                 </>
             </div>
         )

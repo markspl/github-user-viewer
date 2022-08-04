@@ -4,7 +4,7 @@
 
 Shows (for now) dev's information which is fetched from GitHub API.
 
-![React version](https://img.shields.io/github/package-json/dependency-version/markspl/github-user-viewer/react?style=for-the-badge&logo=appveyor) ![React Route version](https://img.shields.io/github/package-json/dependency-version/markspl/github-user-viewer/react-router-dom?style=for-the-badge&logo=appveyor) ![Axios version](https://img.shields.io/github/package-json/dependency-version/markspl/github-user-viewer/axios?style=for-the-badge&logo=appveyor)
+![React version](https://img.shields.io/github/package-json/dependency-version/markspl/github-user-viewer/react?logo=react) ![React Route version](https://img.shields.io/github/package-json/dependency-version/markspl/github-user-viewer/react-router-dom?logo=react) ![React Bootstrap version](https://img.shields.io/github/package-json/dependency-version/markspl/github-user-viewer/bootstrap?logo=bootstrap) ![React Bootstrap version](https://img.shields.io/github/package-json/dependency-version/markspl/github-user-viewer/react-bootstrap?logo=bootstrap)
 
 - - -
 

@@ -24,15 +24,17 @@
 }
 
 .userCard {
-    font-family:Arial, Helvetica, sans-serif;
-    width: 500px;
     border-style: solid;
     padding: 10px;
+    margin-top: 10px;
 }
 
 .avatar {
     width: 100%;
     border-radius: 50%;
+    margin: 10px;
+    max-width: 100px;
+    float: right;
 }
 
 .userBio {
@@ -41,21 +43,6 @@
     white-space: pre-wrap; /* so <br> would work */
 }
 
-.item > dl {
-    font-variant: small-caps;
-    margin-left: 20px;
-}
-
-.item > dl > dt {
+.userInfoItem {
     font-weight: bold;
-    margin-bottom: 2px;
-}
-
-.item > dl > dd {
-    font-size: small;
-    margin-bottom: 5px;
-}
-
-.item > dl > dt::before {
-    content: "👉 ";
 }

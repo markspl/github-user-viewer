@@ -5,6 +5,9 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router";
 
+import { Container } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import User from "./components/User";
 import NotFound from "./components/NotFound";
 
@@ -13,10 +16,12 @@ root.render(
     <BrowserRouter>
         <StrictMode>
 
-            <Routes>
-                <Route path="/" element={<User />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Container>
+                <Routes>
+                    <Route path="/" element={<User />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </Container>
 
         </StrictMode>
     </BrowserRouter>
