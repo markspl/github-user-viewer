@@ -13,3 +13,8 @@ Shows (for now) dev's information which is fetched from GitHub API.
 1. Clone repository `git clone https://github.com/markspl/github-user-viewer.git`
 2. Install required packages `npm i`
 3. Start `npm run start`
+
+### Addresses
+
+- `/` and `/user/` - Homepage
+- `/user/:username/` - GitHub User information. For example, `/user/markspl`

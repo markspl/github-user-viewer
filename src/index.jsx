@@ -14,15 +14,17 @@ import NotFound from "./components/NotFound";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
-        <StrictMode>
+        {/*<StrictMode>*/}
 
             <Container>
                 <Routes>
                     <Route path="/" element={<User />} />
+                    <Route path="/user" element={<User />} />
+                    <Route path="/user/:username" element={<User />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Container>
 
-        </StrictMode>
+        {/*</StrictMode>*/}
     </BrowserRouter>
 );

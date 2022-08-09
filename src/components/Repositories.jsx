@@ -73,7 +73,6 @@ const Repositories = ({ data }) => {
             <Container>
                 <Row>
                     <h2>Repositories</h2>
-                    <div>Loading...</div>);
                 </Row>
             </Container>
         ));
