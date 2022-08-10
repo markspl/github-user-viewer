@@ -5,27 +5,6 @@ import { Container, Badge, Placeholder } from "react-bootstrap";
 const Repositories = ({ data, loading }) => {
     const length = data.length;
 
-    console.log(length);
-
-    const sortByUpdated = (array) => {
-
-        // Sort by comparing element.updated_at
-        const sorter = () => {
-            return function (a, b) {
-                if (a["updated_at"] < b["updated_at"]) return 1;
-                else if (a["updated_at"] > b["updated_at"]) return -1;
-                else return 0;
-            }
-        }
-
-        // Return sorted array
-        return (array.sort(sorter()))
-    }
-
-    if (data !== []) {
-        sortByUpdated(data);
-    };
-
     const calculateBackground = (index) => {
         //rpg(100,200,0) green
         //rpg(255,100,0) red

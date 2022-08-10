@@ -29,7 +29,7 @@ const Home = () => {
         const getRepositories = async () => {
             axios({
                 method: "get",
-                url: `https://api.github.com/users/${username}/repos`,
+                url: `https://api.github.com/users/${username}/repos?sort=updated`,
                 headers: {
                     "Content-Type": "application/json",
                 }
