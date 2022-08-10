@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 import UserInfo from "./UserInfo";
 import Repositories from "./Repositories";
@@ -62,39 +62,35 @@ const Home = () => {
 
     return (
         <div className="userCard">
-            <Container>
-                <Row className="align-items-center">
-                    <Col md={2} />
-                    <Col xs={3}>
-                        {(username && Object.keys(userInfo).length && !error.error ?
-                            <img
-                                src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url}
-                                alt={`User ${userInfo.login} avatar`}
-                                className="avatar" />
+            <div className="clearfix d-flex justify-content-center align-items-center">
+                {(username && Object.keys(userInfo).length && !error.error ?
+                    <img
+                        src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url}
+                        alt={`User ${userInfo.login} avatar`}
+                        className="avatar" />
+                    :
+                    <svg width="250" height="250" className="avatar float-md-start">
+                        <rect width="100%" height="100%" fill="#ccc" />
+                        <text style={{ fill: "white", fontWeight: "bold", fontSize: "40px", }} x="50%" y="60%">:)</text>
+                    </svg>
+                )}
+
+                <div>
+                    <h1>GitHub{username ?
+                        (error.error ?
+                            `/${username}`
                             :
-                            <svg width="250" height="250" className="avatar">
-                                <rect width="100%" height="100%" fill="#ccc" />
-                                <text style={{ fill: "white", fontWeight: "bold", fontSize: "40px", }} x="50%" y="60%">:)</text>
-                            </svg>
-                        )}
-                    </Col>
-                    <Col md={5} xs={9}>
-                        <h1>GitHub{username ?
-                            (error.error ?
-                                `/${username}`
-                                :
-                                <>
-                                    /<a href={userInfo.html_url}>{userInfo.login}</a>
-                                </>
-                            )
-                            : " User Viewer"
-                        }
-                        </h1>
-                        <p className="userBio">{userInfo.bio}</p>
-                    </Col>
-                    <Col md={2} />
-                </Row>
-            </Container>
+                            <>
+                                /<a href={userInfo.html_url}>{userInfo.login}</a>
+                            </>
+                        )
+                        : "/user_viewer"
+                    }
+                    </h1>
+                    <p className="userBio">{userInfo.bio}</p>
+
+                </div>
+            </div>
             <hr />
             <Row>
                 {(username && !loading && !error.error ?
