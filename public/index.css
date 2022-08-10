@@ -45,7 +45,7 @@
     height: 150px;
 }
 
-.avatar-placeholder div {
+.avatar-placeholder > div.avatar-placeholder-inner {
     border-radius: 50%;
     background-color: #ccc;
     width: 100%;
@@ -53,13 +53,18 @@
     display: flex;
 }
 
-.avatar-placeholder span {
+.avatar-placeholder > div.avatar-placeholder-inner > span {
     color: white;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 4em;
     align-self: center;
     text-align: center;
     width: 100%;
+    rotate: 90deg;
+}
+
+.avatar-placeholder > div.avatar-placeholder-inner > .spinner-border {
+    margin: auto;
 }
 
 .userBio {
@@ -71,4 +76,9 @@
 
 .userInfoItem {
     font-weight: bold;
+}
+
+.badges > span {
+    margin-right: 4px;
+    cursor: default;
 }

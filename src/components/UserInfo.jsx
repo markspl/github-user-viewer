@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Placeholder } from "react-bootstrap";
 
 const Userinfo = ({ data }) => {
     // Create dates ready
@@ -17,22 +17,37 @@ const Userinfo = ({ data }) => {
         return `${days} days ago (${createdDateString})`;
     }
 
+    function placeholderText(length = 6) {
+        return (
+            <Placeholder as="span" animation="wave">
+                <Placeholder xs={length} bg="secondary" />
+            </Placeholder>
+        )
+    }
+
+    const isEmpty = (data == null);
+
     return (
         <ListGroup>
             <ListGroup.Item>
-                <span className="userInfoItem">User ID:</span> {data.id}
+                {isEmpty ? placeholderText(9)
+                : <><span className="userInfoItem">User ID:</span> {data.id}</>}
             </ListGroup.Item>
             <ListGroup.Item>
-                <span className="userInfoItem">Followers:</span> {data.followers}
+                {isEmpty ? placeholderText(3)
+                : <><span className="userInfoItem">Followers:</span> {data.followers}</>}
             </ListGroup.Item>
             <ListGroup.Item>
-                <span className="userInfoItem">Following:</span> {data.following}
+                {isEmpty ? placeholderText(3)
+                : <><span className="userInfoItem">Following:</span> {data.following}</>}
             </ListGroup.Item>
             <ListGroup.Item>
-                <span className="userInfoItem">Account created:</span> {accountCreated(data.created_at)}
+                {isEmpty ? placeholderText(6)
+                : <><span className="userInfoItem">Account created:</span> {accountCreated(data.created_at)}</>}
             </ListGroup.Item>
             <ListGroup.Item>
-                <span className="userInfoItem">Total of repos:</span> {data.public_repos}
+                {isEmpty ? placeholderText(5)
+                : <><span className="userInfoItem">Total of repos:</span> {data.public_repos}</>}
             </ListGroup.Item>
         </ListGroup>
     );

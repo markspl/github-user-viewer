@@ -1,10 +1,11 @@
 import React from "react";
 
-import { Container, Row, Badge } from "react-bootstrap";
+import { Container, Badge, Placeholder } from "react-bootstrap";
 
-const Repositories = ({ data }) => {
-
+const Repositories = ({ data, loading }) => {
     const length = data.length;
+
+    console.log(length);
 
     const sortByUpdated = (array) => {
 
@@ -44,6 +45,21 @@ const Repositories = ({ data }) => {
         }
     }
 
+    function placeholderBadges() {
+        const placeholders = [];
+
+        // Create 1-10 elements which length is randomized (1em-10em)
+        for (let i = 0; i < (Math.floor(Math.random() * 10) + 5); i++) {
+            placeholders.push(
+                <Placeholder key={i} style={{ width: `${Math.floor(Math.random() * 10) + 5}em` }} as="span" className="badge bg-dark" animation="wave">
+                    <Placeholder as="span" />
+                </Placeholder>
+            );
+        }
+
+        return (placeholders);
+    }
+
     if (data && length > 0) {
         return (
             <Container>
@@ -62,20 +78,23 @@ const Repositories = ({ data }) => {
             </Container>
         );
     } else {
-        return (length === 0 ? (
-            <Container>
-                <Row>
+        if (length === 0 && loading) {
+            return (
+                <Container>
                     <h2>Repositories</h2>
-                    <p>No repositories</p>
-                </Row>
-            </Container>
-        ) : (
-            <Container>
-                <Row>
+                    <div className="badges">
+                        {placeholderBadges()}
+                    </div>
+                </Container>
+            );
+        } else {
+            return (
+                <Container>
                     <h2>Repositories</h2>
-                </Row>
-            </Container>
-        ));
+                    <p>No repositories.</p>
+                </Container>
+            );
+        }
     }
 }
 

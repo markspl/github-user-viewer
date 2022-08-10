@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner, Placeholder } from "react-bootstrap";
 
 import UserInfo from "./UserInfo";
 import Repositories from "./Repositories";
@@ -19,8 +19,14 @@ const Home = () => {
 
     // Get user data from GitHub API only when page is reloaded
     useEffect(() => {
+        setLoading(true);
+
+        setUserInfo({});
+        setRepoInfo([]);
+        setError({ error: false, message: "" });
+
+        // Fetch all user's repositories
         const getRepositories = async () => {
-            //console.log("getrepositories");
             axios({
                 method: "get",
                 url: `https://api.github.com/users/${username}/repos`,
@@ -36,6 +42,7 @@ const Home = () => {
             });
         };
 
+        // Fetch all user informations
         const getUserInfo = async () => {
             axios({
                 method: "get",
@@ -45,6 +52,8 @@ const Home = () => {
                 }
             }).then(res => {
                 setUserInfo(res.data);
+
+                // User found, let's check repos
                 getRepositories();
             }).catch(err => {
                 setError({ error: true, message: err.response.data.message });
@@ -55,59 +64,86 @@ const Home = () => {
         if (!loading && username != null) {
             setLoading(true);
             getUserInfo();
+            
+            // If you want to be nasty and you got too fast internet,
+            // you can try timeouter to see placeholders
+            //setTimeout(() => {
+            //  getUserInfo();
+            //}, 4000);
         }
 
     }, []);
 
+    function placeholderText(length = 6) {
+        return (
+            <Placeholder as="span" animation="wave">
+                <Placeholder xs={length} bg="secondary" />
+            </Placeholder>
+        )
+    }
+
     return (
         <div className="userCard">
-            <div className="clearfix d-flex justify-content-center align-items-center">
-                {(username && Object.keys(userInfo).length && !error.error ?
-                    <img
-                        src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url}
-                        alt={`User ${userInfo.login} avatar`}
-                        className="avatar" />
-                    :
-                    <div className="avatar-placeholder">
-                        <div>
-                            <span>:)</span>
+            <div className="d-flex justify-content-center align-items-center">
+                {(loading && username ?
+                    <div className="avatar-placeholder" aria-hidden="true">
+                        <div className="avatar-placeholder-inner">
+                            <Spinner animation="border" variant="light">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
                         </div>
                     </div>
+                    : (username && Object.keys(userInfo).length && !error.error ?
+                        <img
+                            src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url}
+                            alt={`User ${userInfo.login} avatar`}
+                            className="avatar" />
+                        : <div className="avatar-placeholder">
+                            <div className="avatar-placeholder-inner"><span>:)</span></div>
+                        </div>
+                    )
                 )}
 
                 <div>
-                    <h1>GitHub{username ?
-                        (error.error ?
-                            `/${username}`
-                            :
-                            <>
-                                /<a href={userInfo.html_url}>{userInfo.login}</a>
-                            </>
+                    {(loading && username ?
+                        (
+                            <h1 style={{ minWidth: "300px" }}>GitHub/{placeholderText()}</h1>
+                        ) : (username ?
+                            (error.error ?
+                                `<h1>GitHub/${username}</h1>`
+                                : <>
+                                    <h1>GitHub/<a href={userInfo.html_url}>{userInfo.login}</a></h1>
+                                </>
+                            ) : <h1>GitHub/user_viewer</h1>
                         )
-                        : "/user_viewer"
-                    }
-                    </h1>
-                    {userInfo.bio ? <p className="userBio">{userInfo.bio}</p> : <></>}
+                    )}
 
+                    {loading && username && (
+                        <>
+                            {placeholderText(8)}
+                            {placeholderText(5)}
+                        </>
+                    )}
+
+                    {(!loading && userInfo.bio) ? <p className="userBio">{userInfo.bio}</p> : <></>}
                 </div>
             </div>
             <hr />
             <Row>
-                {(username && !loading && !error.error ?
+                {(username && !error.error ? (
                     <Col md={4}>
-                        <UserInfo data={userInfo} />
+                        {!loading ? (
+                            <UserInfo data={userInfo} />
+                        ) : <UserInfo />}
                     </Col>
-                    :
-                    ""
+                ) : <></>
                 )}
+
                 <Col>
-                    {(username ?
-                        (Object.keys(userInfo).length && !loading ?
-                            <Repositories data={repositories} />
-                            :
-                            (error.error ? "" : <h2>Loading...</h2>)
-                        )
-                        :
+                    {(username && !error.error) && (
+                        <Repositories data={repositories} loading={loading} />
+                    )}
+                    {(!username && !error.error) && (
                         <>
                             <p>Get GitHub user information with address "user/username".</p>
                             <p>For example, <a href="/user/markspl">/user/markspl</a></p>

@@ -17,4 +17,14 @@ Shows (for now) dev's information which is fetched from GitHub API.
 ### Addresses
 
 - `/` and `/user/` - Homepage
-- `/user/:username/` - GitHub User information. For example, `/user/markspl`
+- `/user/:username/` - GitHub User information. For example, `/user/markspl` ([localhost:3000/user/markspl](http://localhost:3000/user/markspl))
+
+- - -
+
+### Screenshots
+
+![Screenshot while loading](img/loading.png)
+*Placeholders while loading information from API*
+
+![GitHub/githubtraining](img/githubtraining.png)
+*The look how The GitHub Training Team organization (not a profile) is shown. Max 30 repositories.*
