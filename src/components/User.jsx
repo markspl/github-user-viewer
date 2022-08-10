@@ -37,7 +37,6 @@ const Home = () => {
         };
 
         const getUserInfo = async () => {
-            //console.log("getuserinfo");
             axios({
                 method: "get",
                 url: `https://api.github.com/users/${username}`,
@@ -69,10 +68,11 @@ const Home = () => {
                         alt={`User ${userInfo.login} avatar`}
                         className="avatar" />
                     :
-                    <svg width="250" height="250" className="avatar float-md-start">
-                        <rect width="100%" height="100%" fill="#ccc" />
-                        <text style={{ fill: "white", fontWeight: "bold", fontSize: "40px", }} x="50%" y="60%">:)</text>
-                    </svg>
+                    <div className="avatar-placeholder">
+                        <div>
+                            <span>:)</span>
+                        </div>
+                    </div>
                 )}
 
                 <div>
@@ -87,7 +87,7 @@ const Home = () => {
                         : "/user_viewer"
                     }
                     </h1>
-                    <p className="userBio">{userInfo.bio}</p>
+                    {userInfo.bio ? <p className="userBio">{userInfo.bio}</p> : <></>}
 
                 </div>
             </div>
