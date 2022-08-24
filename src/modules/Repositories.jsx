@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 
 import { Container, Badge, Placeholder } from "react-bootstrap";
