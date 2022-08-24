@@ -6,8 +6,7 @@ import { Row, Col, Spinner, Placeholder } from "react-bootstrap";
 import UserInfo from "./UserInfo";
 import Repositories from "../modules/Repositories";
 import { useParams } from "react-router-dom";
-
-const axios = require("axios");
+import API from "../utils/API";
 
 const Home = () => {
     const { username } = useParams();
@@ -25,45 +24,24 @@ const Home = () => {
         setRepoInfo([]);
         setError({ error: false, message: "" });
 
-        // Fetch all user's repositories
-        const getRepositories = async () => {
-            axios({
-                method: "get",
-                url: `https://api.github.com/users/${username}/repos?sort=updated`,
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }).then(res => {
-                setRepoInfo(res.data);
-                setLoading(false);
-            }).catch(err => {
-                setError({ error: true, message: err.response.data.message });
-                setLoading(false);
-            });
-        };
-
-        // Fetch all user informations
-        const getUserInfo = async () => {
-            axios({
-                method: "get",
-                url: `https://api.github.com/users/${username}`,
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }).then(res => {
-                setUserInfo(res.data);
-
-                // User found, let's check repos
-                getRepositories();
-            }).catch(err => {
-                setError({ error: true, message: err.response.data.message });
-                setLoading(false);
-            });
-        };
-
         if (!loading && username != null) {
             setLoading(true);
-            getUserInfo();
+
+            // Fetch user information
+            API.getData(`https://api.github.com/users/${username}`)
+            .then(data => {
+                setUserInfo(data);
+
+                // Fetch list of repositories
+                API.getData(`https://api.github.com/users/${username}/repos?sort=updated`)
+                .then(data => {
+                    setRepoInfo(data);
+                });
+            }).catch(err => {
+                setError({ error: true, message: err.response.data.message });
+            });
+            
+            setLoading(false);
 
             // If you want to be nasty and you got too fast internet,
             // you can try timeouter to see placeholders
