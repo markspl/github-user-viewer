@@ -64,14 +64,13 @@ const Home = () => {
         if (!loading && username != null) {
             setLoading(true);
             getUserInfo();
-            
+
             // If you want to be nasty and you got too fast internet,
             // you can try timeouter to see placeholders
             //setTimeout(() => {
             //  getUserInfo();
             //}, 4000);
         }
-
     }, []);
 
     function placeholderText(length = 6) {

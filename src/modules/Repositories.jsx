@@ -2,7 +2,8 @@
 
 import React from "react";
 
-import { Container, Badge, Placeholder } from "react-bootstrap";
+import { Container, Badge } from "react-bootstrap";
+import PlaceholderBadges from "../components/PlaceholderBadges"
 
 const Repositories = ({ data, loading }) => {
     const length = data.length;
@@ -24,21 +25,6 @@ const Repositories = ({ data, loading }) => {
             // A few only, let's show only darker green variants
             return `rgb(${origR + (Math.floor(R / 10) * index)}, ${origG - (Math.floor(G / 10) * index)}, 0)`;
         }
-    }
-
-    function placeholderBadges() {
-        const placeholders = [];
-
-        // Create 1-10 elements which length is randomized (1em-10em)
-        for (let i = 0; i < (Math.floor(Math.random() * 10) + 5); i++) {
-            placeholders.push(
-                <Placeholder key={i} style={{ width: `${Math.floor(Math.random() * 10) + 5}em` }} as="span" className="badge bg-dark" animation="wave">
-                    <Placeholder as="span" />
-                </Placeholder>
-            );
-        }
-
-        return (placeholders);
     }
 
     if (data && length > 0) {
@@ -64,7 +50,7 @@ const Repositories = ({ data, loading }) => {
                 <Container>
                     <h2>Repositories</h2>
                     <div className="badges">
-                        {placeholderBadges()}
+                        <PlaceholderBadges value={10}/>
                     </div>
                 </Container>
             );
