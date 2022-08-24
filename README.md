@@ -19,6 +19,12 @@ Shows (for now) dev's information which is fetched from GitHub API.
 - `/` and `/user/` - Homepage
 - `/user/:username/` - GitHub User information. For example, `/user/markspl` ([localhost:3000/user/markspl](http://localhost:3000/user/markspl))
 
+### To-Do
+- Create a text input to search user
+- Show more information about selected repository
+- Show different information if selected user is actually a group
+- ...
+
 - - -
 
 ### Screenshots
