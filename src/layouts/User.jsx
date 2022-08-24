@@ -98,7 +98,12 @@ const Home = () => {
                             alt={`User ${userInfo.login} avatar`}
                             className="avatar" />
                         : <div className="avatar-placeholder">
-                            <div className="avatar-placeholder-inner"><span>:)</span></div>
+                            <div className="avatar-placeholder-inner">
+                                {!error.error ?
+                                    <span>:)</span>
+                                    : <span>:(</span>
+                                }
+                            </div>
                         </div>
                     )
                 )}
@@ -109,7 +114,7 @@ const Home = () => {
                             <h1 style={{ minWidth: "300px" }}>GitHub/{placeholderText()}</h1>
                         ) : (username ?
                             (error.error ?
-                                `<h1>GitHub/${username}</h1>`
+                                <h1 className="github-name">GitHub/{username}</h1>
                                 : <>
                                     <h1>GitHub/<a href={userInfo.html_url}>{userInfo.login}</a></h1>
                                 </>

@@ -45,7 +45,7 @@
     height: 150px;
 }
 
-.avatar-placeholder > div.avatar-placeholder-inner {
+.avatar-placeholder>div.avatar-placeholder-inner {
     border-radius: 50%;
     background-color: #ccc;
     width: 100%;
@@ -53,7 +53,7 @@
     display: flex;
 }
 
-.avatar-placeholder > div.avatar-placeholder-inner > span {
+.avatar-placeholder>div.avatar-placeholder-inner>span {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 4em;
@@ -63,8 +63,12 @@
     rotate: 90deg;
 }
 
-.avatar-placeholder > div.avatar-placeholder-inner > .spinner-border {
+.avatar-placeholder>div.avatar-placeholder-inner>.spinner-border {
     margin: auto;
+}
+
+.github-name {
+    word-break: break-all;
 }
 
 .userBio {
@@ -78,7 +82,7 @@
     font-weight: bold;
 }
 
-.badges > span {
+.badges>span {
     margin-right: 4px;
     cursor: default;
 }
