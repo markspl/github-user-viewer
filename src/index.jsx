@@ -14,8 +14,7 @@ import NotFound from "./components/NotFound";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
-        {/*<StrictMode>*/}
-
+        <StrictMode>
             <Container>
                 <Routes>
                     <Route path="/" element={<User />} />
@@ -24,7 +23,6 @@ root.render(
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Container>
-
-        {/*</StrictMode>*/}
+        </StrictMode>
     </BrowserRouter>
 );
