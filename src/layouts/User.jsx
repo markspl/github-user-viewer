@@ -48,7 +48,7 @@ const Home = () => {
             // If you want to be nasty and you got too fast internet,
             // you can try timeouter to see placeholders
             //setTimeout(() => {
-            //... 
+            //...
             //}, 4000);
         }
     }, []);
