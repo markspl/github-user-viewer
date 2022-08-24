@@ -1,11 +1,13 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import { Row, Col, Spinner, Placeholder } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 import UserInfo from "../modules/UserInfo";
+import UserAvatar from "../components/UserAvatar";
+import UserHeaderAndDescription from "../modules/UserHeaderAndDescription";
 import Repositories from "../modules/Repositories";
-import { useParams } from "react-router-dom";
 import API from "../utils/API";
 
 const Home = () => {
@@ -29,86 +31,33 @@ const Home = () => {
 
             // Fetch user information
             API.getData(`https://api.github.com/users/${username}`)
-            .then(data => {
-                setUserInfo(data);
-
-                // Fetch list of repositories
-                API.getData(`https://api.github.com/users/${username}/repos?sort=updated`)
                 .then(data => {
-                    setRepoInfo(data);
+                    setUserInfo(data);
+
+                    // Fetch list of repositories
+                    API.getData(`https://api.github.com/users/${username}/repos?sort=updated`)
+                        .then(data => {
+                            setRepoInfo(data);
+                            setLoading(false);
+                        });
+                }).catch(err => {
+                    setError({ error: true, message: err.response.data.message });
+                    setLoading(false);
                 });
-            }).catch(err => {
-                setError({ error: true, message: err.response.data.message });
-            });
-            
-            setLoading(false);
 
             // If you want to be nasty and you got too fast internet,
             // you can try timeouter to see placeholders
             //setTimeout(() => {
-            //  getUserInfo();
+            //... 
             //}, 4000);
         }
     }, []);
 
-    function placeholderText(length = 6) {
-        return (
-            <Placeholder as="span" animation="wave">
-                <Placeholder xs={length} bg="secondary" />
-            </Placeholder>
-        )
-    }
-
     return (
         <div className="userCard">
             <div className="d-flex justify-content-center align-items-center">
-                {(loading && username ?
-                    <div className="avatar-placeholder" aria-hidden="true">
-                        <div className="avatar-placeholder-inner">
-                            <Spinner animation="border" variant="light">
-                                <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                        </div>
-                    </div>
-                    : (username && Object.keys(userInfo).length && !error.error ?
-                        <img
-                            src={userInfo.gravatar_id ? userInfo.gravatar_id : userInfo.avatar_url}
-                            alt={`User ${userInfo.login} avatar`}
-                            className="avatar" />
-                        : <div className="avatar-placeholder">
-                            <div className="avatar-placeholder-inner">
-                                {!error.error ?
-                                    <span>:)</span>
-                                    : <span>:(</span>
-                                }
-                            </div>
-                        </div>
-                    )
-                )}
-
-                <div>
-                    {(loading && username ?
-                        (
-                            <h1 style={{ minWidth: "300px" }}>GitHub/{placeholderText()}</h1>
-                        ) : (username ?
-                            (error.error ?
-                                <h1 className="github-name">GitHub/{username}</h1>
-                                : <>
-                                    <h1>GitHub/<a href={userInfo.html_url}>{userInfo.login}</a></h1>
-                                </>
-                            ) : <h1>GitHub/user_viewer</h1>
-                        )
-                    )}
-
-                    {loading && username && (
-                        <>
-                            {placeholderText(8)}
-                            {placeholderText(5)}
-                        </>
-                    )}
-
-                    {(!loading && userInfo.bio) ? <p className="userBio">{userInfo.bio}</p> : <></>}
-                </div>
+                <UserAvatar values={{ username, userInfo, loading, error }} />
+                <UserHeaderAndDescription values={{ username, userInfo, loading, error }} />
             </div>
             <hr />
             <Row>
