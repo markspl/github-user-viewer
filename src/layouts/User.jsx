@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Spinner, Placeholder } from "react-bootstrap";
 
-import UserInfo from "./UserInfo";
+import UserInfo from "../modules/UserInfo";
 import Repositories from "../modules/Repositories";
 import { useParams } from "react-router-dom";
 import API from "../utils/API";
